@@ -1,4 +1,5 @@
 const { expressjwt: jwt } = require("express-jwt");
+const User = require("../models/User.model");
 
 // Instantiate the JWT token validation middleware
 const isAuthenticated = jwt({
@@ -23,7 +24,33 @@ function getTokenFromHeaders(req) {
   return null;
 }
 
+const isAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.payload.id);
+    if (user.status !== "admin") {
+      return res.status(401).send("Unauthorized");
+    }
+    next();
+  } catch (error) {
+    return res.status(401).send("Unauthorized");
+  }
+};
+
+const isEditor = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.payload.id);
+    if (user.status !== "editor") {
+      return res.status(401).send("Unauthorized");
+    }
+    next();
+  } catch (error) {
+    return res.status(401).send("Unauthorized");
+  }
+};
+
 // Export the middleware so that we can use it to create protected routes
 module.exports = {
   isAuthenticated,
+  isAdmin,
+  isEditor,
 };
