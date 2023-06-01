@@ -193,9 +193,9 @@ router.get("/services", isUser, async (req, res, next) => {
 });
 
 // POST a new service - accessible to editor, admin
-router.post("/services", isEditor, async (req, res, next) => {
+router.post("/service", isEditor, async (req, res, next) => {
   try {
-    const newService = await Services.create(req.body);
+    const newService = await Service.create(req.body);
     res.json(newService);
   } catch (error) {
     next(error);
@@ -203,9 +203,9 @@ router.post("/services", isEditor, async (req, res, next) => {
 });
 
 // PATCH an existing service - accessible to editor, admin
-router.patch("/services/:id", isEditor, async (req, res, next) => {
+router.patch("/service/:id", isEditor, async (req, res, next) => {
   try {
-    const updatedService = await Services.findByIdAndUpdate(
+    const updatedService = await Service.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
@@ -217,7 +217,7 @@ router.patch("/services/:id", isEditor, async (req, res, next) => {
 });
 
 // DELETE a service - accessible to admin
-router.delete("/services/:id", isAdmin, async (req, res, next) => {
+router.delete("/service/:id", isAdmin, async (req, res, next) => {
   try {
     await Services.findByIdAndRemove(req.params.id);
     res.json({ message: "Service deleted" });
