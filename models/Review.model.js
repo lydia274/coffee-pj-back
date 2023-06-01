@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose")
-const User = require("./User.model")
+const { Schema, model } = require("mongoose");
+const User = require("./User.model");
 
 const listingSchema = new Schema(
   {
@@ -23,8 +23,8 @@ const listingSchema = new Schema(
   {
     timestamps: true,
   }
-)
+);
 
-const Listing = model("Listing", listingSchema)
+const Listing = model("Listing", listingSchema);
 
-module.exports = Listing
+module.exports = Listing;

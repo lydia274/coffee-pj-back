@@ -3,8 +3,7 @@ const router = express.Router();
 const CoffeeShop = require("../models/CoffeeShop.model.");
 const { isAdmin, isEditor } = require("../middleware/role.middleware.js");
 
-// BROWSE GET user, editor, admin
-router.get("/browse", async (req, res, next) => {
+router.get("/coffeeshop", async (req, res, next) => {
   try {
     const coffeeShops = await CoffeeShop.find();
     res.json(coffeeShops);
@@ -13,8 +12,7 @@ router.get("/browse", async (req, res, next) => {
   }
 });
 
-// BROWSE POST editor, admin
-router.post("/browse", [isEditor, isAdmin], async (req, res, next) => {
+router.post("/coffeeshop", [isEditor, isAdmin], async (req, res, next) => {
   const { name, image, address, openingHours, servings, services, rating } =
     req.body;
   try {
@@ -33,7 +31,7 @@ router.post("/browse", [isEditor, isAdmin], async (req, res, next) => {
   }
 });
 
-router.patch("/browse/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.patch("/coffeeshop/:id", [isEditor, isAdmin], async (req, res, next) => {
   const { id } = req.params;
   const { name, image, address, openingHours, servings, services, rating } =
     req.body;
@@ -49,28 +47,32 @@ router.patch("/browse/:id", [isEditor, isAdmin], async (req, res, next) => {
   }
 });
 
-router.delete("/browse/:id", [isEditor, isAdmin], async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    await CoffeeShop.findByIdAndRemove(id);
-    res.json({ message: "CoffeeShop has been removed." });
-  } catch (err) {
-    next(err);
+router.delete(
+  "/coffeeshop/:id",
+  [isEditor, isAdmin],
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      await CoffeeShop.findByIdAndRemove(id);
+      res.json({ message: "CoffeeShop has been removed." });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // Comment GET
-router.get("/comments", async (req, res, next) => {
+router.get("/comment", async (req, res, next) => {
   try {
-    const comments = await Comment.find();
-    res.json(comments);
+    const comment = await Comment.find();
+    res.json(comment);
   } catch (err) {
     next(err);
   }
 });
 
 // Comment POST
-router.post("/comments", [isEditor, isAdmin], async (req, res, next) => {
+router.post("/comment", [isEditor, isAdmin], async (req, res, next) => {
   try {
     const newComment = await Comment.create(req.body);
     res.json(newComment);
@@ -80,7 +82,7 @@ router.post("/comments", [isEditor, isAdmin], async (req, res, next) => {
 });
 
 // Comment UPDATE
-router.patch("/comments/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.patch("/comment/:id", [isEditor, isAdmin], async (req, res, next) => {
   const { id } = req.params;
   try {
     const updatedComment = await Comment.findByIdAndUpdate(id, req.body, {
@@ -93,7 +95,7 @@ router.patch("/comments/:id", [isEditor, isAdmin], async (req, res, next) => {
 });
 
 // Comment DELETE
-router.delete("/comments/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.delete("/comment/:id", [isEditor, isAdmin], async (req, res, next) => {
   const { id } = req.params;
   try {
     await Comment.findByIdAndRemove(id);
@@ -105,16 +107,16 @@ router.delete("/comments/:id", [isEditor, isAdmin], async (req, res, next) => {
 
 // Review routes
 
-router.get("/reviews", async (req, res, next) => {
+router.get("/review", async (req, res, next) => {
   try {
-    const reviews = await Review.find();
-    res.json(reviews);
+    const review = await Review.find();
+    res.json(review);
   } catch (err) {
     next(err);
   }
 });
 
-router.post("/reviews", [isEditor, isAdmin], async (req, res, next) => {
+router.post("/review", [isEditor, isAdmin], async (req, res, next) => {
   try {
     const newReview = await Review.create(req.body);
     res.json(newReview);
@@ -123,7 +125,7 @@ router.post("/reviews", [isEditor, isAdmin], async (req, res, next) => {
   }
 });
 
-router.patch("/reviews/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.patch("/review/:id", [isEditor, isAdmin], async (req, res, next) => {
   try {
     const updatedReview = await Review.findByIdAndUpdate(
       req.params.id,
@@ -136,7 +138,7 @@ router.patch("/reviews/:id", [isEditor, isAdmin], async (req, res, next) => {
   }
 });
 
-router.delete("/reviews/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.delete("/review/:id", [isEditor, isAdmin], async (req, res, next) => {
   try {
     await Review.findByIdAndRemove(req.params.id);
     res.json({ message: "Review has been removed." });
@@ -147,7 +149,7 @@ router.delete("/reviews/:id", [isEditor, isAdmin], async (req, res, next) => {
 
 // Listing routes
 
-router.get("/listings", async (req, res, next) => {
+router.get("/listing", async (req, res, next) => {
   try {
     const listings = await Listing.find();
     res.json(listings);
@@ -156,7 +158,7 @@ router.get("/listings", async (req, res, next) => {
   }
 });
 
-router.post("/listings", [isEditor, isAdmin], async (req, res, next) => {
+router.post("/listing", [isEditor, isAdmin], async (req, res, next) => {
   try {
     const newListing = await Listing.create(req.body);
     res.json(newListing);
@@ -165,7 +167,7 @@ router.post("/listings", [isEditor, isAdmin], async (req, res, next) => {
   }
 });
 
-router.patch("/listings/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.patch("/listing/:id", [isEditor, isAdmin], async (req, res, next) => {
   try {
     const updatedListing = await Listing.findByIdAndUpdate(
       req.params.id,
@@ -183,10 +185,10 @@ module.exports = router;
 // Services routes
 
 // GET all services - accessible to user, editor, admin
-router.get("/services", isUser, async (req, res, next) => {
+router.get("/service", isUser, async (req, res, next) => {
   try {
-    const services = await Services.find();
-    res.json(services);
+    const service = await Services.find();
+    res.json(service);
   } catch (error) {
     next(error);
   }
