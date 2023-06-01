@@ -1,5 +1,5 @@
-const { Schema, model } = require("mongoose")
-const User = require("./User.model")
+const { Schema, model } = require("mongoose");
+const User = require("./User.model");
 
 const reviewSchema = new Schema(
   {
@@ -23,8 +23,9 @@ const reviewSchema = new Schema(
   {
     timestamps: true,
   }
-)
+);
 
 const Review = model("Review", reviewSchema)
 
 module.exports = Review
+
