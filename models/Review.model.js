@@ -21,7 +21,7 @@ const listingSchema = new Schema(
   },
 
   {
-    timestamps: true, //to indicate when it was created
+    timestamps: true,
   }
 )
 
