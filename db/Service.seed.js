@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
-const Student = require("../models/Service.model")
+const Service = require("../models/Service.model")
 
-const Service = [
+const services = [
   {
     name: "CoffeeShop1",
     kidsFriendly: false,
@@ -95,7 +95,7 @@ const Service = [
   },
 ]
 
-async function service() {
+module.exports = async function service() {
   try {
     await Service.deleteMany()
     await Service.create(services)
@@ -105,5 +105,3 @@ async function service() {
     console.log(error)
   }
 }
-
-service()

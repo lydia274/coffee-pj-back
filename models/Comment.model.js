@@ -7,6 +7,10 @@ const commentSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    coffeeshop: {
+      type: Schema.Types.ObjectId,
+      ref: "CoffeeShop",
+    },
     text: {
       type: String,
       maxLength: 200,

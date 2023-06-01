@@ -3,11 +3,11 @@ const Review = require("../models/Review.model")
 
 const Review = [
   {
-    creator: ,//id create an editor
-    coffeeshop: ,//id create a CS
+    creator: "647890e70c4821fe8dcd1166", //id create an editor
+    coffeeshop: "", //id create a CS
 
-    text: "WHATEVER REVIEW It’s nice, cozy atmosphere, modern design. In nice Paris district, established in 2021. Specialty coffee, they also do filter."
-  }  
+    text: "WHATEVER REVIEW It’s nice, cozy atmosphere, modern design. In nice Paris district, established in 2021. Specialty coffee, they also do filter.",
+  },
 ]
 
 async function review() {
