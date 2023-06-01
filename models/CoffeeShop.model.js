@@ -11,10 +11,8 @@ const CoffeeShopSchema = new Schema(
       required: [true, "Image URL is required."],
     },
     address: {
-      type: {
-        type: String,
-        required: true,
-      },
+      type: String,
+      required: true,
     },
     openingHours: {
       type: String,
