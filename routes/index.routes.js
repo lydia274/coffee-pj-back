@@ -179,3 +179,51 @@ router.patch("/listings/:id", [isEditor, isAdmin], async (req, res, next) => {
 });
 
 module.exports = router;
+
+// Services routes
+
+// GET all services - accessible to user, editor, admin
+router.get("/services", isUser, async (req, res, next) => {
+  try {
+    const services = await Services.find();
+    res.json(services);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// POST a new service - accessible to editor, admin
+router.post("/services", isEditor, async (req, res, next) => {
+  try {
+    const newService = await Services.create(req.body);
+    res.json(newService);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// PATCH an existing service - accessible to editor, admin
+router.patch("/services/:id", isEditor, async (req, res, next) => {
+  try {
+    const updatedService = await Services.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedService);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// DELETE a service - accessible to admin
+router.delete("/services/:id", isAdmin, async (req, res, next) => {
+  try {
+    await Services.findByIdAndRemove(req.params.id);
+    res.json({ message: "Service deleted" });
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = router;
