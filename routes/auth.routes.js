@@ -8,7 +8,9 @@ const saltRounds = 10; // How many rounds should bcrypt run the salt
 
 // POST /auth/signup  - Creates a new user in the database
 router.post("/signup", (req, res, next) => {
-  const { email, password, name } = req.body;
+
+  const { email, password, name, status } = req.body
+
 
   // Check if email or password or name are provided as empty strings
   if (email === "" || password === "" || name === "") {
@@ -52,8 +54,9 @@ router.post("/signup", (req, res, next) => {
         email,
         password: hashedPassword,
         name,
-        status: "user",
-      });
+        status,
+      })
+
     })
     .then((createdUser) => {
       // Deconstruct the newly created user object to omit the password

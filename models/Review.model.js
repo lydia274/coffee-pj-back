@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const User = require("./User.model");
 
-const listingSchema = new Schema(
+const reviewSchema = new Schema(
   {
     name: String,
     description: {
@@ -25,6 +25,7 @@ const listingSchema = new Schema(
   }
 );
 
-const Listing = model("Listing", listingSchema);
+const Review = model("Review", reviewSchema)
 
-module.exports = Listing;
+module.exports = Review
+

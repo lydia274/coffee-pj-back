@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
 
 const CoffeeShopSchema = new Schema(
   {
@@ -32,7 +32,7 @@ const CoffeeShopSchema = new Schema(
     ],
 
     rating: {
-      type: Schema.Types.Number,
+      type: Number,
       min: 1,
       max: 5,
       validate: {
@@ -44,8 +44,8 @@ const CoffeeShopSchema = new Schema(
   {
     timestamps: true,
   }
-);
+)
 
-const CoffeeShop = model("CoffeeShop", CoffeeShopSchema);
+const CoffeeShop = model("CoffeeShop", CoffeeShopSchema)
 
-module.exports = CoffeeShop;
+module.exports = CoffeeShop
