@@ -1,7 +1,5 @@
-const mongoose = require("mongoose");
-const Serving = require("../models/Serving.model");
-
-const MONGODB_URI = "mongodb://localhost:27017/coffee-project";
+const mongoose = require("mongoose")
+const Serving = require("../models/Serving.model")
 
 const servings = [
   {
@@ -24,25 +22,14 @@ const servings = [
     name: "Plant-based Milk",
     image: "https://example.com/plantbasedmilk.jpg",
   },
-];
+]
 
-mongoose.connect(MONGODB_URI, {}).then(() => {
-  console.log("Connected to MongoDB from mongoose");
-
-  // Drop database to avoid duplicates
-  mongoose.connection.db.dropDatabase();
-
-  // Create servings
-  Serving.create(servings)
-    .then((servingsFromDB) => {
-      console.log(`Created ${servingsFromDB.length} servings`);
-
-      // Once created, close the DB connection
-      mongoose.connection.close();
-    })
-    .catch((err) =>
-      console.log(
-        `An error occurred while creating servings from the DB: ${err}`
-      )
-    );
-});
+module.exports = async function servingSeed() {
+  try {
+    await Serving.deleteMany()
+    await Serving.create(servings)
+    console.log("Created serving")
+  } catch (error) {
+    console.log(error)
+  }
+}

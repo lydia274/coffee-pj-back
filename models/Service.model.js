@@ -1,24 +1,15 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require("mongoose")
 
-const ServicesSchema = new Schema({
-  kidsFriendly: {
-    type: Boolean,
-  },
-  veganOptions: {
-    type: Boolean,
-  },
-  dogFriendly: {},
-  outdoorSeating: {
-    type: Boolean,
-  },
-  acceptCreditCards: {
-    type: Boolean,
-  },
-  wheelchairAccess: {
-    type: Boolean,
-  },
-});
+const ServiceSchema = new Schema({
+  coffeeshop: Schema.Types.ObjectId,
+  kidsFriendly: Boolean,
+  veganOptions: Boolean,
+  dogFriendly: Boolean,
+  outdoorSeating: Boolean,
+  acceptCreditCards: Boolean,
+  wheelchairAccess: Boolean,
+})
 
-const Services = model("Services", ServicesSchema);
+const Service = model("Services", ServiceSchema)
 
-module.exports = Services;
+module.exports = Service

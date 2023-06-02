@@ -1,16 +1,16 @@
 const mongoose = require("mongoose")
 const Listing = require("../models/Listing.model")
 
-const Listing = [
+const listings = [
   {
     name: "Top-10 places",
     description: "very good",
-    creator: "bla", //id create the editor
+    creator: "b647890e70c4821fe8dcd1166la",
     list: [], //an array of ids
   },
 ]
 
-async function listing() {
+module.exports = async function listingSeed() {
   try {
     await Listing.deleteMany()
     await Listing.create(listings)
@@ -20,5 +20,3 @@ async function listing() {
     console.log(error)
   }
 }
-
-listing()

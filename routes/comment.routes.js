@@ -19,18 +19,14 @@ router.get("/", async (req, res, next) => {
 })
 
 // Comment POST only auth users, editor, admin
-router.post(
-  "/",
-  [isAuthenticated, isEditor, isAdmin],
-  async (req, res, next) => {
-    try {
-      const newComment = await Comment.create(req.body)
-      res.json(newComment)
-    } catch (err) {
-      next(err)
-    }
+router.post("/", isAuthenticated, async (req, res, next) => {
+  try {
+    const newComment = await Comment.create(req.body)
+    res.json(newComment)
+  } catch (err) {
+    next(err)
   }
-)
+})
 
 // Comment DELETE - editor, admin
 router.delete("/:id", [isEditor, isAdmin], async (req, res, next) => {

@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const CoffeeShop = require("../models/CoffeeShop.model ");
+const mongoose = require("mongoose")
+const CoffeeShop = require("../models/CoffeeShop.model")
 
-const MONGODB_URI = "mongodb://localhost:27017/coffee-project";
+const MONGODB_URI = "mongodb://localhost:27017/coffee-project"
 
 const coffeeShops = [
   {
@@ -10,7 +10,7 @@ const coffeeShops = [
     image:
       "https://assets.vogue.com/photos/618e7c4badd0a25be01d750e/3:2/w_5304,h_3536,c_limit/GettyImages-1222654885.jpg",
     openingHours: "7H30-1H30",
-    servings:    [],
+    servings: [],
     services: [],
   },
   {
@@ -93,31 +93,15 @@ const coffeeShops = [
     servings: [],
     services: [],
   },
-];
+]
 
-mongoose
-  .connect(MONGODB_URI, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB from mongoose");
-
-    // Drop database to avoid duplicates
-    mongoose.connection.db.dropDatabase();
-
-    // Create coffeeShops
-    CoffeeShop.create(coffeeShops)
-      .then((coffeeShopsFromDB) => {
-        console.log(`Created ${coffeeShopsFromDB.length} coffeeShops`);
-
-        // Once created, close the DB connection
-        mongoose.connection.close();
-      })
-      .catch((err) =>
-        console.log(
-          `An error occurred while creating coffeeShops from the DB: ${err}`
-        )
-      );
-  });
+module.exports = async function coffeeSeed() {
+  try {
+    await CoffeeShop.deleteMany()
+    await CoffeeShop.create(coffeeShops)
+    console.log("Created coffeeshops")
+    process.exit()
+  } catch (error) {
+    console.log(error)
+  }
+}
