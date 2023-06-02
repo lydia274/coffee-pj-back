@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const Review = require("../models/Review.model")
 
-const Review = [
+const reviews = [
   {
     creator: "647890e70c4821fe8dcd1166", //id create an editor
     coffeeshop: "", //id create a CS
@@ -10,7 +10,7 @@ const Review = [
   },
 ]
 
-async function review() {
+module.exports = async function reviewSeed() {
   try {
     await Review.deleteMany()
     await Review.create(reviews)
@@ -20,5 +20,3 @@ async function review() {
     console.log(error)
   }
 }
-
-review()

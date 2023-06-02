@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const User = require("./models/user.model");
+const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
+const User = require("../models/User.model")
 
 const users = [
   {
@@ -15,34 +15,21 @@ const users = [
     name: "Editor",
     role: "editor",
   },
-];
+]
 
-async function seedUsers() {
+module.exports = async function userSeed() {
   try {
-    // Connect to MongoDB
-    await mongoose.connect("mongodb://localhost:27017/coffee-project", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await User.deleteMany()
+    users.forEach(async (user) => {
+      const salt = bcrypt.genSaltSync(12)
+      const hashedPassword = bcrypt.hashSync(user.password, salt)
+      user.password = hashedPassword
+      console.log(user)
+      await User.create(user)
+    })
 
-    // Delete any existing users
-    await User.deleteMany();
-
-    // Hash the passwords and create the users
-    for (let user of users) {
-      const salt = bcrypt.genSaltSync(10);
-      const hash = bcrypt.hashSync(user.password, salt);
-      user.password = hash;
-
-      await User.create(user);
-    }
-
-    console.log("Seeding successful");
-    mongoose.connection.close();
-  } catch (err) {
-    console.error(err);
-    mongoose.connection.close();
+    console.log("Created users")
+  } catch (error) {
+    console.log(error)
   }
 }
-
-seedUsers();
