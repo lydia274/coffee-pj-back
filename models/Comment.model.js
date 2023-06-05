@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose")
 const User = require("../models/User.model")
+const CoffeeShop = require("../models/CoffeeShop.model")
 
 const commentSchema = new Schema(
   {
