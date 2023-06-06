@@ -19,6 +19,17 @@ router.get("/", isAuthenticated, isAdmin, async (req, res, next) => {
   }
 })
 
+//get ONE user
+router.get("/:id", isAuthenticated, async (req, res, next) => {
+  try {
+    const oneUser = await User.findById(id)
+
+    res.json(allUsers)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.patch("/:id", [isEditor, isAdmin], async (req, res, next) => {
   const { id } = req.params
   const { name, image, address, openingHours, servings, services, rating } =

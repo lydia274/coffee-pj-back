@@ -37,7 +37,7 @@ app.use("/listing", listingroutes)
 const reviewroutes = require("./routes/review.routes")
 app.use("/review", reviewroutes)
 
-//review routes
+//user routes
 const usersroutes = require("./routes/user.routes")
 app.use("/allusers", usersroutes)
 

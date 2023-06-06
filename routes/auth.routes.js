@@ -115,6 +115,14 @@ router.post("/login", (req, res, next) => {
     .catch((err) => next(err)) // In this case, we send error handling to the error handling middleware.
 })
 
+// POST /auth/logout - Logs out the user
+router.post("/logout", isAuthenticated, (req, res, next) => {
+  // Clear the token on the client-side
+  res.clearCookie("authToken") // Assuming the token is stored in a cookie
+
+  res.status(200).json({ message: "Logout successful" })
+})
+
 // GET  /auth/verify  -  Used to verify JWT stored on the client
 router.get("/verify", isAuthenticated, (req, res, next) => {
   // If JWT token is valid the payload gets decoded by the
