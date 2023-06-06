@@ -21,6 +21,7 @@ router.get("/", async (req, res, next) => {
 // Comment POST only auth users, editor, admin
 router.post("/", isAuthenticated, async (req, res, next) => {
   try {
+    console.log(req)
     const newComment = await Comment.create(req.body)
     res.json(newComment)
   } catch (err) {
