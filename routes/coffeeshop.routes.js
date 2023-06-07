@@ -14,6 +14,20 @@ router.get("/", async (req, res, next) => {
   }
 })
 
+// COFFEESHOP GET a random CS - user, editor, admin
+router.get("/random", async (req, res, next) => {
+  try {
+    const coffeeShops = await CoffeeShop.find()
+    // Get a random coffee shop from the list of all
+    const randomIndex = Math.floor(Math.random() * coffeeShops.length)
+    const randomCoffeeShop = coffeeShops[randomIndex]
+
+    res.json(randomCoffeeShop)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // COFFEESHOP POST editor, admin
 
 // [isEditor, isAdmin]
