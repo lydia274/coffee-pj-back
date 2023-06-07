@@ -8,7 +8,7 @@ const {
   isAuthenticated,
 } = require("../middleware/jwt.middleware.js")
 
-//Get all the users - available only to admin
+//Get ALL the users - available only to admin
 
 router.get("/", isAuthenticated, isAdmin, async (req, res, next) => {
   try {
@@ -19,20 +19,39 @@ router.get("/", isAuthenticated, isAdmin, async (req, res, next) => {
   }
 })
 
-router.patch("/:id", [isEditor, isAdmin], async (req, res, next) => {
+//get ONE user - the users own profile
+router.get("/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params
-  const { name, image, address, openingHours, servings, services, rating } =
-    req.body
+
   try {
-    const updatedCoffeeShop = await CoffeeShop.findByIdAndUpdate(
-      id,
-      { name, image, address, openingHours, servings, services, rating },
-      { new: true }
-    )
-    res.json(updatedCoffeeShop, { message: "CoffeeShop has been updated!" })
+    const oneUser = await User.findById(id)
+
+    res.json(oneUser)
   } catch (err) {
     next(err)
   }
 })
+
+//UPD a coffeeshop info
+
+router.patch(
+  "/:id",
+  [isAuthenticated, isEditor, isAdmin],
+  async (req, res, next) => {
+    const { id } = req.params
+    const { name, image, address, openingHours, servings, services, rating } =
+      req.body
+    try {
+      const updatedCoffeeShop = await CoffeeShop.findByIdAndUpdate(
+        id,
+        { name, image, address, openingHours, servings, services, rating },
+        { new: true }
+      )
+      res.json(updatedCoffeeShop, { message: "CoffeeShop has been updated!" })
+    } catch (err) {
+      next(err)
+    }
+  }
+)
 
 module.exports = router
