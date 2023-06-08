@@ -25,14 +25,6 @@ app.use("/auth", authRoutes)
 const coffeeroutes = require("./routes/coffeeshop.routes")
 app.use("/coffeeshop", coffeeroutes)
 
-//comment routes
-const commentroutes = require("./routes/comment.routes")
-app.use("/comment", commentroutes)
-
-//Listing routes
-const listingroutes = require("./routes/listing.routes")
-app.use("/listing", listingroutes)
-
 //review routes
 const reviewroutes = require("./routes/review.routes")
 app.use("/review", reviewroutes)
