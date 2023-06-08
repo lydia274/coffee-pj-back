@@ -29,12 +29,12 @@ const isAdmin = async (req, res, next) => {
   try {
     const user = await User.findById(req.payload._id)
     if (user.status !== "Admin") {
-      return res.status(401).send("Unauthorized 1")
+      return res.status(401).send("You must be admin to perform this action")
     } else {
       next()
     }
   } catch (error) {
-    return res.status(401).send("Unauthorized 2")
+    return res.status(401).send("401: Unauthorized! Must be Admin")
   }
 }
 
@@ -43,11 +43,11 @@ const isEditor = async (req, res, next) => {
     const user = await User.findById(req.payload._id)
     console.log(user)
     if (user.status !== "Editor") {
-      return res.status(401).send("Unauthorized")
+      return res.status(401).send("You must be Editor to perform this action")
     }
     next()
   } catch (error) {
-    return res.status(401).send("Unauthorized")
+    return res.status(401).send("401: Unauthorized! Must be Admin")
   }
 }
 

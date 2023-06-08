@@ -4,11 +4,10 @@ const CoffeeShopSchema = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required."],
+      required: [true, "Please enter the name of the coffee shop"],
     },
     image: {
       type: String,
-      required: [true, "Image URL is required."],
     },
     address: {
       type: String,
@@ -16,30 +15,8 @@ const CoffeeShopSchema = new Schema(
     },
     openingHours: {
       type: String,
-      required: [true, "Opening hours are required."],
     },
-    servings: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-    services: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-
-    rating: {
-      type: Number,
-      min: 1,
-      max: 5,
-      validate: {
-        validator: (value) => Number.isInteger(value),
-        message: ({ value }) => `${value} is not an integer value`,
-      },
-    },
+    services: { type: String },
   },
   {
     timestamps: true,
