@@ -17,15 +17,6 @@ router.get("/allcoffeeshops", async (req, res, next) => {
     next(err)
   }
 })
-router.get("/:id", async (req, res, next) => {
-  try {
-    const coffeeShops = await CoffeeShop.find({ _id: req.params.id })
-    res.json(coffeeShops)
-  } catch (err) {
-    next(err)
-  }
-})
-
 // COFFEESHOP GET a random CS - user, editor, admin
 router.get("/random", async (req, res, next) => {
   try {
@@ -35,6 +26,15 @@ router.get("/random", async (req, res, next) => {
     const randomCoffeeShop = coffeeShops[randomIndex]
 
     res.json(randomCoffeeShop)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const coffeeShops = await CoffeeShop.find({ _id: req.params.id })
+    res.json(coffeeShops)
   } catch (err) {
     next(err)
   }
