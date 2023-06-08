@@ -106,6 +106,8 @@ router.post("/login", (req, res, next) => {
           expiresIn: "6h",
         })
 
+        console.log(authToken)
+
         // Send the token as the response
         res.status(200).json({ authToken: authToken })
       } else {
