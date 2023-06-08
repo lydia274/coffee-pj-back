@@ -2,12 +2,24 @@ const express = require("express")
 const router = express.Router()
 const CoffeeShop = require("../models/CoffeeShop.model")
 
-const { isAdmin, isEditor } = require("../middleware/jwt.middleware.js")
+const {
+  isAdmin,
+  isEditor,
+  isAuthenticated,
+} = require("../middleware/jwt.middleware.js")
 
 // COFFEESHOP GET user, editor, admin
-router.get("/", async (req, res, next) => {
+router.get("/allcoffeeshops", async (req, res, next) => {
   try {
     const coffeeShops = await CoffeeShop.find()
+    res.json(coffeeShops)
+  } catch (err) {
+    next(err)
+  }
+})
+router.get("/:id", async (req, res, next) => {
+  try {
+    const coffeeShops = await CoffeeShop.find({ _id: req.params.id })
     res.json(coffeeShops)
   } catch (err) {
     next(err)
@@ -52,7 +64,7 @@ router.post("/", async (req, res, next) => {
 
 // COFFEESHOP UPD editor, admin
 
-router.patch("/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.patch("/edit/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params
   const { name, image, address, openingHours, servings, services, rating } =
     req.body
@@ -62,7 +74,9 @@ router.patch("/:id", [isEditor, isAdmin], async (req, res, next) => {
       { name, image, address, openingHours, servings, services, rating },
       { new: true }
     )
-    res.json(updatedCoffeeShop, { message: "CoffeeShop has been updated!" })
+    res
+      .status(200)
+      .json({ message: "CoffeeShop has been updated!", updatedCoffeeShop })
   } catch (err) {
     next(err)
   }
@@ -70,7 +84,7 @@ router.patch("/:id", [isEditor, isAdmin], async (req, res, next) => {
 
 // COFFEESHOP DELETE editor, admin
 
-router.delete("/:id", [isEditor, isAdmin], async (req, res, next) => {
+router.delete("/:id", isAuthenticated, isEditor, async (req, res, next) => {
   const { id } = req.params
   try {
     await CoffeeShop.findByIdAndRemove(id)

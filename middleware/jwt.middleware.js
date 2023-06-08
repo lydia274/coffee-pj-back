@@ -40,8 +40,9 @@ const isAdmin = async (req, res, next) => {
 
 const isEditor = async (req, res, next) => {
   try {
-    const user = await User.findById(req.payload.id)
-    if (user.status !== "editor") {
+    const user = await User.findById(req.payload._id)
+    console.log(user)
+    if (user.status !== "Editor") {
       return res.status(401).send("Unauthorized")
     }
     next()
